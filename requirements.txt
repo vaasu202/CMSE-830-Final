@@ -1,0 +1,2 @@
+plotly.express
+astroquery.ipac.nexsci.nasa_exoplanet_archive
