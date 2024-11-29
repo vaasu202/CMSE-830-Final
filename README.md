@@ -1,63 +1,97 @@
-# Exoplanet and Stellar Properties Analysis
+# Exoplanet & Stellar Analysis App 🚀
 
-This Streamlit-based application analyzes the relationship between exoplanet characteristics and their host stars. The data is sourced from the NASA Exoplanet Archive via the `astroquery` library. The application allows for data visualization and exploration of the underlying relationships between stellar and exoplanet parameters.
+This project aims to analyze and predict the equilibrium temperatures of exoplanets based on their physical characteristics and stellar properties.
 
-## Features
+## Table of Contents
 
-- **Data Download & Caching**: Automatically fetches exoplanet and stellar data from the NASA Exoplanet Archive and caches it for 24 hours to reduce API calls.
-- **Data Cleaning & Merging**: Cleans the data by removing rows with missing values and merges exoplanet and stellar data on the common field `hostname`.
-- **Exploratory Data Analysis (EDA)**: Provides various interactive visualizations to explore key exoplanet and stellar features.
-- **Insights & Observations**: Displays statistical insights about the relationships between exoplanet and stellar properties.
+1. [About This Project](#about-this-project)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Models & Metrics](#models--metrics)
+5. [Contributors](#contributors)
+
+## About This Project
+
+This project focuses on building an application to analyze and predict the equilibrium temperatures of exoplanets using data from NASA's Exoplanet Archive. It combines exploratory data analysis (EDA), machine learning model training, and user-driven predictions.
+
+### Key Features:
+- **Data Collection**: We gather data from NASA's Exoplanet Archive, combining exoplanetary and stellar information.
+- **Exploratory Data Analysis (EDA)**: Visualize distributions, correlations, and relationships in the data to understand key trends.
+- **Modeling**: Build predictive models using Random Forest and Gradient Boosting algorithms to estimate the equilibrium temperature of exoplanets.
+- **Prediction**: Based on user input, make predictions about the equilibrium temperature of exoplanets using the trained models.
+
+### Models Used:
+- **Random Forest Regressor**: An ensemble method that builds multiple decision trees to make predictions based on the features provided.
+- **Gradient Boosting Regressor**: Another powerful ensemble method that builds decision trees sequentially, optimizing performance with each tree.
+
+This application provides an intuitive platform for astronomers, researchers, and enthusiasts to explore exoplanet data and make temperature predictions based on stellar and planetary characteristics. 🌌
+
+*Made with ❤️ by Vaasu Sohee*
+
+---
 
 ## Installation
 
-1. Clone the repository:
+To set up this project on your local machine, follow these steps:
+
+### Prerequisites:
+- Python 3.8 or higher
+- pip (Python package manager)
+
+### Steps:
+1. Clone this repository:
     ```bash
-    git clone https://github.com/your-username/exoplanet-analysis.git
+    git clone https://github.com/yourusername/exoplanet-analysis.git
     cd exoplanet-analysis
     ```
 
-2. Install the required Python packages:
+2. Install the required dependencies:
     ```bash
     pip install -r requirements.txt
     ```
 
-3. Run the Streamlit app:
+3. Download the exoplanet data from NASA's Exoplanet Archive by running the script.
+
+4. Run the app using Streamlit:
     ```bash
     streamlit run app.py
     ```
 
-## Data Sources
+---
 
-This project utilizes data from the [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/). The following datasets are used:
+## Usage
 
-- **Exoplanet Data**: Includes exoplanet name, orbital period, radius, mass, and equilibrium temperature.
-- **Stellar Data**: Includes host star spectral type, luminosity, temperature, and age.
+Once the app is running, you will have the following sections in the sidebar:
 
-## Application Structure
+1. **View Data**: Displays the dataset containing exoplanet and stellar information.
+2. **EDA**: Explore visualizations such as the distribution of exoplanet radii, mass vs radius scatter plot, and more.
+3. **Modeling**: View metrics of the trained models, such as Mean Squared Error (MSE), R-squared (R²), Mean Absolute Error (MAE), and accuracy.
+4. **Prediction**: Make predictions for the equilibrium temperature of exoplanets based on user inputs such as radius, mass, stellar temperature, and luminosity.
 
-1. **View Data**: Displays the raw exoplanet and stellar datasets, as well as the cleaned and merged dataset.
-2. **Data Cleaning & Merging**: Removes records with missing essential values and merges the exoplanet and stellar datasets based on the `hostname` field.
-3. **Exploratory Data Analysis (EDA)**: Offers a variety of visualizations such as histograms, scatter plots, and heatmaps to explore relationships between variables.
-4. **Insights & Observations**: Presents key insights derived from the analysis, including correlation coefficients and average exoplanet characteristics by stellar type.
+---
 
-## Visualizations
+## Models & Metrics
 
-- **Exoplanet Radius Distribution**: Histogram of exoplanet radii.
-- **Exoplanet Mass vs. Radius**: Scatter plot of exoplanet mass versus radius, color-coded by spectral type.
-- **Stellar Luminosity by Spectral Type**: Box plot showing stellar luminosity distributions by spectral type.
-- **Correlation Heatmap**: Displays the correlation between selected features.
-- **Stellar Age vs. Luminosity**: Scatter plot of stellar age versus luminosity, color-coded by spectral type.
+### Models:
+- **Random Forest Regressor**: Uses multiple decision trees to generate predictions. This model generally performs well in most cases.
+- **Gradient Boosting Regressor**: Uses an ensemble of trees to reduce bias and variance, optimizing performance with each iteration.
 
-## Dependencies
+### Metrics:
+- **MSE (Mean Squared Error)**: Measures the average squared difference between actual and predicted values. Lower values are better.
+- **R² (Coefficient of Determination)**: Measures how well the model explains the variance in the target variable. Higher values are better.
+- **MAE (Mean Absolute Error)**: The average of absolute differences between actual and predicted values. Lower values are better.
+- **Accuracy (%)**: Average percentage accuracy of predictions relative to actual values. Higher values indicate better model performance.
 
-- **Pandas**: For data manipulation and cleaning.
-- **Numpy**: For numerical operations.
-- **Plotly**: For interactive visualizations.
-- **Streamlit**: For building the web-based app.
-- **Astroquery**: For querying the NASA Exoplanet Archive.
+---
 
-Install the dependencies with:
+## Contributors
 
-```bash
-pip install pandas numpy plotly streamlit astroquery
+- **Vaasu Sohee** – Initial development and project setup.
+  
+If you'd like to contribute, feel free to fork the repository, make your changes, and submit a pull request!
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
