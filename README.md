@@ -87,11 +87,4 @@ Once the app is running, you will have the following sections in the sidebar:
 ## Contributors
 
 - **Vaasu Sohee** – Initial development and project setup.
-  
-If you'd like to contribute, feel free to fork the repository, make your changes, and submit a pull request!
 
----
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
