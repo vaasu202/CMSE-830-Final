@@ -18,7 +18,7 @@ def about_section():
         This project aims to analyze and predict the equilibrium temperatures of exoplanets based on their physical characteristics and stellar properties.
 
         ## Key Features:
-        - **Data Collection**: We gather data from NASA's Exoplanet Archive, combining exoplanetary and stellar information.
+        - **Data Collection**: We gather data from NASA's Exoplanet Archive, combining exoplanetary and stellar information with the 2Mass Dataset.
         - **Exploratory Data Analysis (EDA)**: Visualize distributions, correlations, and other relationships in the data to understand key trends.
         - **Modeling**: Build predictive models using Random Forest and Gradient Boosting algorithms to estimate the equilibrium temperature of exoplanets.
         - **Prediction**: Based on user input, make predictions about the equilibrium temperature of exoplanets using the trained models.
