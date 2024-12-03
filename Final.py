@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 from astroquery.ipac.nexsci.nasa_exoplanet_archive import NasaExoplanetArchive
+from astroquery.vizier import Vizier
 import streamlit as st
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
@@ -54,12 +55,32 @@ def download_stellar_data():
     return stellar.to_pandas()
 
 @st.cache_resource(ttl=86400)
+def download_2mass_data():
+    Vizier.ROW_LIMIT = -1
+    result = Vizier.query_catalog("II/246", catalog=["2MASS"])
+    data = result[0].to_pandas()
+    # Filter or process 2MASS data as needed
+    return data
+
+@st.cache_resource(ttl=86400)
 def clean_and_merge_data(exoplanets, stellar):
     exoplanets_clean = exoplanets.dropna(subset=['pl_name', 'hostname', 'pl_orbper', 'pl_rade', 'pl_masse'])
     stellar_clean = stellar.dropna(subset=['hostname', 'st_spectype', 'st_lum', 'st_teff'])
     combined_df = pd.merge(exoplanets_clean, stellar_clean, on='hostname', how='inner')
     combined_df['pl_eqt'] = combined_df['pl_eqt'].fillna(combined_df['pl_eqt'].mean())
     return combined_df
+
+# ---------------------------
+# Add 2MASS Data Integration
+# ---------------------------
+@st.cache_resource(ttl=86400)
+def integrate_2mass_data(combined_df, mass_data):
+    """
+    Merge 2MASS catalog data with the combined exoplanet and stellar data.
+    """
+    # Assume `2MASS` data contains `hostname` or similar matching column
+    integrated_df = pd.merge(combined_df, mass_data, left_on='hostname', right_on='2MASS_hostname', how='left')
+    return integrated_df
 
 # ---------------------------
 # 2. Exploratory Data Analysis (EDA)
