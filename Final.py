@@ -10,6 +10,68 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
+# ---------------------------
+# Add Custom CSS for Styling
+# ---------------------------
+st.set_page_config(page_title="Exoplanet Analysis", layout="wide")
+
+st.markdown(
+    """
+    <style>
+    body {
+        background: linear-gradient(to right, #1a1a2e, #16213e);
+        color: #eaeaea;
+        font-family: 'Arial', sans-serif;
+    }
+    h1, h2, h3, h4 {
+        color: #ff798b;
+    }
+    .stButton>button {
+        background-color: #170003;
+        color: white;
+        border-radius: 12px;
+        font-size: 16px;
+        padding: 10px 20px;
+        transition: 0.3s;
+    }
+    .stButton>button:hover {
+        background-color: #8a2be2;
+        transform: scale(1.05);
+    }
+    .sidebar .stSidebar {
+        background: #16213e;
+        color: #f8b400;
+    }
+    .stSelectbox, .stSlider {
+        font-size: 18px;
+        background-color: #f0f4f8;
+        color: #333;
+        border-radius: 8px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# ---------------------------
+# Add Animated Header
+# ---------------------------
+st.markdown(
+    """
+    <div style="text-align: center; padding: 20px;">
+        <img src="https://www.nasa.gov/wp-content/uploads/2018/07/s75-31690.jpeg" 
+             alt="Exoplanet Illustration" width="200">
+        <h1 style="font-family: 'Courier New', monospace; color: #f8b400;">
+            Exoplanet & Stellar Analysis App 🌌
+        </h1>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+# ---------------------------
+# About Section
+# ---------------------------
 def about_section():
     st.sidebar.title("About This Project")
     st.sidebar.markdown(
@@ -70,9 +132,6 @@ def clean_and_merge_data(exoplanets, stellar):
     combined_df['pl_eqt'] = combined_df['pl_eqt'].fillna(combined_df['pl_eqt'].mean())
     return combined_df
 
-# ---------------------------
-# Add 2MASS Data Integration
-# ---------------------------
 @st.cache_resource(ttl=86400)
 def integrate_2mass_data(combined_df, mass_data):
     """
@@ -86,74 +145,41 @@ def integrate_2mass_data(combined_df, mass_data):
 # 2. Exploratory Data Analysis (EDA)
 # ---------------------------
 def plot_visualizations(data):
-    st.subheader("Choose a Visualization")
+    st.subheader("🔍 Choose a Visualization")
     viz_options = [
         "Exoplanet Radii Distribution",
         "Mass vs Radius Scatter Plot",
         "Stellar Luminosity by Spectral Type",
         "Correlation Heatmap",
+        "3D Scatter: Temperature, Luminosity & Radius",
         "Scatter Matrix (Top Features)"
     ]
-    choice = st.selectbox("Visualization Options", viz_options)
+    choice = st.selectbox("Pick One", viz_options)
 
     if choice == "Exoplanet Radii Distribution":
-        fig = px.histogram(
-            data,
-            x='pl_rade',
-            nbins=30,
-            title="Exoplanet Radii Distribution",
-            color_discrete_sequence=["#636EFA"],
-            height=600,
-            width=900
-        )
+        fig = px.histogram(data, x='pl_rade', nbins=30, title="Exoplanet Radii Distribution", color_discrete_sequence=["#636EFA"])
         st.plotly_chart(fig)
 
     elif choice == "Mass vs Radius Scatter Plot":
-        fig = px.scatter(
-            data,
-            x='pl_rade',
-            y='pl_masse',
-            color='st_spectype',
-            title="Exoplanet Mass vs Radius",
-            height=600,
-            width=900
-        )
+        fig = px.scatter(data, x='pl_rade', y='pl_masse', color='st_spectype', title="Exoplanet Mass vs Radius")
         st.plotly_chart(fig)
 
     elif choice == "Stellar Luminosity by Spectral Type":
-        fig = px.box(
-            data,
-            x='st_spectype',
-            y='st_lum',
-            title="Stellar Luminosity Distribution",
-            color_discrete_sequence=["#EF553B"],
-            height=600,
-            width=900
-        )
+        fig = px.box(data, x='st_spectype', y='st_lum', title="Stellar Luminosity Distribution")
         st.plotly_chart(fig)
 
     elif choice == "Correlation Heatmap":
         numeric_data = data.select_dtypes(include=[np.number])
         corr = numeric_data.corr()
-        fig = px.imshow(
-            corr,
-            text_auto=True,
-            color_continuous_scale="Viridis",
-            title="Correlation Heatmap",
-            height=600,
-            width=900
-        )
+        fig = px.imshow(corr, text_auto=True, color_continuous_scale="Viridis", title="Correlation Heatmap")
+        st.plotly_chart(fig)
+
+    elif choice == "3D Scatter: Temperature, Luminosity & Radius":
+        fig = px.scatter_3d(data, x='st_teff', y='st_lum', z='pl_rade', color='st_spectype', title="3D Scatter")
         st.plotly_chart(fig)
 
     elif choice == "Scatter Matrix (Top Features)":
-        fig = px.scatter_matrix(
-            data,
-            dimensions=['pl_rade', 'pl_masse', 'st_teff', 'st_lum'],
-            color='st_spectype',
-            title="Scatter Matrix",
-            height=800,
-            width=900
-        )
+        fig = px.scatter_matrix(data, dimensions=['pl_rade', 'pl_masse', 'st_teff', 'st_lum'], color='st_spectype')
         st.plotly_chart(fig)
 
 # ---------------------------
@@ -261,11 +287,6 @@ def predict_with_model(model, ranges):
 # Main Streamlit App
 # ---------------------------
 def main():
-    st.set_page_config(page_title="Exoplanet Analysis", layout="wide")
-    st.markdown(
-        "<h1 style='text-align: center; color: #4CAF50;'>Exoplanet & Stellar Analysis App 🚀</h1>",
-        unsafe_allow_html=True,
-    )
 
     # Data download and merging
     exoplanets = download_exoplanet_data()
