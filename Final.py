@@ -29,10 +29,10 @@ st.markdown(
     .stButton>button {
         background-color: #170003;
         color: white;
-        border-radius: 12px;
-        font-size: 16px;
+        border-radius: 16px;
+        font-size: 24px;
         padding: 10px 20px;
-        transition: 0.3s;
+        transition: 0.5s;
     }
     .stButton>button:hover {
         background-color: #8a2be2;
@@ -69,31 +69,83 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+def user_guide():
+    st.title("User Guide 📖")
+    st.markdown(
+        """
+        Welcome to the **Exoplanet & Stellar Analysis App**! This guide will help you navigate and use the app effectively.
+
+        ---
+        ### **1. Sidebar Navigation**
+        The app includes a sidebar with the following sections:
+        - **About the Project**: Learn about the app's purpose and features.
+        - **View Data**: Inspect and explore the datasets used for analysis.
+        - **EDA (Exploratory Data Analysis)**: Visualize data trends and correlations.
+        - **Modeling**: Explore machine learning metrics and results.
+        - **Prediction**: Make predictions based on custom inputs.
+
+        ---
+        ### **2. About the Project**
+        - Provides an overview of the app's goals, including data exploration and predictive modeling.
+        - Explains features like data visualization, machine learning, and exoplanet prediction.
+
+        ---
+        ### **3. View Data**
+        - Displays the merged dataset with columns like `pl_name`, `pl_rade`, `st_teff`, and more.
+        - Use the scroll or search features to explore the data.
+
+        ---
+        ### **4. Exploratory Data Analysis (EDA)**
+        - Offers interactive visualizations:
+          - Exoplanet Radii Distribution
+          - Mass vs Radius Scatter Plot
+          - Stellar Luminosity by Spectral Type
+          - Correlation Heatmap
+          - 3D Scatter: Temperature, Luminosity & Radius
+          - Scatter Matrix
+        - Select a visualization from the dropdown and interact with the plots.
+
+        ---
+        ### **5. Prediction**
+        - Predicts the equilibrium temperature of exoplanets based on input parameters.
+        - **Steps**:
+          1. Adjust sliders for parameters like exoplanet radius, mass, stellar temperature, and luminosity.
+          2. Click **Submit Prediction**.
+          3. View the predicted temperature and enjoy the celebration balloons! 🎈
+        
+        ---
+        **Enjoy exploring the universe of exoplanetary data! 🌌**
+        """
+    )
+
+
+
 # ---------------------------
 # About Section
 # ---------------------------
-def about_section():
-    st.sidebar.title("About This Project")
-    st.sidebar.markdown(
+def about_page():
+    # Title and description
+    st.title("About This Project 🚀")
+    st.markdown(
         """
-        # Exoplanet & Stellar Analysis App 🚀
+        ## Exoplanet & Stellar Analysis App
         This project aims to analyze and predict the equilibrium temperatures of exoplanets based on their physical characteristics and stellar properties.
 
-        ## Key Features:
-        - **Data Collection**: We gather data from NASA's Exoplanet Archive, combining exoplanetary and stellar information with the 2Mass Dataset.
-        - **Exploratory Data Analysis (EDA)**: Visualize distributions, correlations, and other relationships in the data to understand key trends.
-        - **Modeling**: Build predictive models using Random Forest and Gradient Boosting algorithms to estimate the equilibrium temperature of exoplanets.
-        - **Prediction**: Based on user input, make predictions about the equilibrium temperature of exoplanets using the trained models.
-        
-        ## Models Used:
-        - **Random Forest Regressor**: An ensemble method that builds multiple decision trees to make predictions based on the features provided.
-        - **Gradient Boosting Regressor**: Another powerful ensemble method that builds decision trees sequentially, optimizing performance with each tree.
+        ### Key Features:
+        - **Data Collection**: Gather data from NASA's Exoplanet Archive and the 2Mass Dataset.
+        - **Exploratory Data Analysis (EDA)**: Visualize distributions, correlations, and relationships in the data.
+        - **Modeling**: Predict equilibrium temperature using Random Forest and Gradient Boosting models.
+        - **Prediction**: Make predictions based on user input.
 
-        This application provides an intuitive platform for astronomers, researchers, and enthusiasts to explore exoplanet data and make temperature predictions based on stellar and planetary characteristics. 🌌
+        ### Models Used:
+        - **Random Forest Regressor**: Builds multiple decision trees to make predictions.
+        - **Gradient Boosting Regressor**: Sequentially optimizes predictions with decision trees.
 
         *Made with ❤️ by Vaasu Sohee*
         """
     )
+
+
 
 # ---------------------------
 # 1. Data Collection and Preparation
@@ -292,15 +344,18 @@ def main():
     exoplanets = download_exoplanet_data()
     stellar = download_stellar_data()
     combined_df = clean_and_merge_data(exoplanets, stellar)
-
     st.sidebar.title("Navigation")
-    options = ["View Data", "EDA", "Modeling", "Prediction"]
+    options = ["About the Project","User Guide","View Data", "EDA", "Modeling", "Prediction"]
     choice = st.sidebar.radio("Go to", options)
 
-    about_section()
-
     # View data section
-    if choice == "View Data":
+    if choice == "About the Project":
+        about_page()
+    
+    elif choice == "User Guide":
+        user_guide()
+
+    elif choice == "View Data":
         st.header("View Dataset")
         st.write(combined_df)
 
